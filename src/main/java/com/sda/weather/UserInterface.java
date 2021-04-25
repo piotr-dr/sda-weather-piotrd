@@ -26,8 +26,11 @@ public class UserInterface {
             int clientChoice = scanner.nextInt();
 
             switch (clientChoice) {
+                case 0:
+                    return;
                 case 1:
                     addNewLocation();
+                    break;
             }
 
         }
@@ -43,8 +46,10 @@ public class UserInterface {
         String city = scanner.nextLine();
         System.out.println("Type latitude:");
         double latitude = scanner.nextDouble();
+        scanner.nextLine();
         System.out.println("Type longitude:");
         double longitude = scanner.nextDouble();
+        scanner.nextLine();
         String response = addingLocationController.addNewLocation(country, region, city, latitude, longitude);
         System.out.println("New location has been added: " + response);
     }
