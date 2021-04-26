@@ -1,5 +1,7 @@
 package com.sda.weather;
 
+import com.sda.weather.controller.AddingLocationController;
+
 import java.util.Scanner;
 
 public class UserInterface {

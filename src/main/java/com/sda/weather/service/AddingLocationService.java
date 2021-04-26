@@ -1,4 +1,6 @@
-package com.sda.weather;
+package com.sda.weather.service;
+
+import com.sda.weather.repository.WeatherRepositoryImpl;
 
 public class AddingLocationService {
 

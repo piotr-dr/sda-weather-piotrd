@@ -1,10 +1,11 @@
-package com.sda.weather;
+package com.sda.weather.repository;
 
+import com.sda.weather.service.Location;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-public class WeatherRepositoryImpl implements WeatherRepository{
+public class WeatherRepositoryImpl implements WeatherRepository {
 
     private SessionFactory sessionFactory;
 

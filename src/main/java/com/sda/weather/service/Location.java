@@ -1,4 +1,4 @@
-package com.sda.weather;
+package com.sda.weather.service;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

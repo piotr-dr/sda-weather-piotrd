@@ -1,5 +1,8 @@
 package com.sda.weather;
 
+import com.sda.weather.controller.AddingLocationController;
+import com.sda.weather.repository.WeatherRepositoryImpl;
+import com.sda.weather.service.AddingLocationService;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;

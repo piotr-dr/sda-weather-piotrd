@@ -1,4 +1,6 @@
-package com.sda.weather;
+package com.sda.weather.repository;
+
+import com.sda.weather.service.Location;
 
 public interface WeatherRepository {
 

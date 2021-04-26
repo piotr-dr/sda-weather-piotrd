@@ -1,4 +1,7 @@
-package com.sda.weather;
+package com.sda.weather.controller;
+
+import com.sda.weather.service.AddingLocationService;
+import com.sda.weather.service.Location;
 
 public class AddingLocationController {
 
