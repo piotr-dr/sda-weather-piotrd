@@ -1,15 +1,19 @@
 package com.sda.weather;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sda.weather.controller.AddingLocationController;
+import com.sda.weather.controller.GettingLocationController;
 
 import java.util.Scanner;
 
 public class UserInterface {
 
     AddingLocationController addingLocationController;
+    GettingLocationController gettingLocationController;
 
-    public UserInterface(AddingLocationController addingLocationController) {
+    public UserInterface(AddingLocationController addingLocationController, GettingLocationController gettingLocationController) {
         this.addingLocationController = addingLocationController;
+        this.gettingLocationController = gettingLocationController;
     }
 
     void runApplication() {
@@ -33,9 +37,22 @@ public class UserInterface {
                 case 1:
                     addNewLocation();
                     break;
+                case 2:
+                    showLocations();
+                    break;
             }
 
         }
+    }
+
+    private void showLocations() {
+        String locations = null;
+        try {
+            locations = gettingLocationController.getLocations();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        System.out.printf("Added locations:\n%s\n\n", locations);
     }
 
     private void addNewLocation() {
@@ -53,7 +70,7 @@ public class UserInterface {
         double longitude = scanner.nextDouble();
         scanner.nextLine();
         String response = addingLocationController.addNewLocation(country, region, city, latitude, longitude);
-        System.out.println("New location has been added: " + response);
+        System.out.printf("New location has been added:\n%s\n\n", response);
     }
 
 }
