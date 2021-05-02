@@ -70,7 +70,7 @@ public class UserInterface {
         double longitude = scanner.nextDouble();
         scanner.nextLine();
         String response = addingLocationController.addNewLocation(country, region, city, latitude, longitude);
-        System.out.println("New location has been added: " + response);
+        System.out.printf("New location has been added:\n%s\n\n", response);
     }
 
 }

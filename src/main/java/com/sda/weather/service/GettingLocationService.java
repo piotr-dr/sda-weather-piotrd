@@ -1,19 +1,22 @@
 package com.sda.weather.service;
 
-import com.sda.weather.repository.WeatherRepositoryImpl;
+import com.sda.weather.repository.WeatherRepository;
 
 import java.util.List;
 
 public class GettingLocationService {
 
-    WeatherRepositoryImpl weatherRepository;
+    WeatherRepository weatherRepository;
 
-    public GettingLocationService(WeatherRepositoryImpl weatherRepository) {
+    public GettingLocationService(WeatherRepository weatherRepository) {
         this.weatherRepository = weatherRepository;
     }
 
     public List<Location> getLocations() {
         List<Location> locations = weatherRepository.getLocations();
+        if (locations.isEmpty()) {
+            throw new RuntimeException("Location's list is empty.");
+        }
         return locations;
     }
 

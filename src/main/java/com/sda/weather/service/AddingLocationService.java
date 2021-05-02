@@ -1,16 +1,16 @@
 package com.sda.weather.service;
 
-import com.sda.weather.repository.WeatherRepositoryImpl;
+import com.sda.weather.repository.WeatherRepository;
 
 public class AddingLocationService {
 
-    private WeatherRepositoryImpl weatherRepository;
+    private WeatherRepository weatherRepository;
     private final double MIN_LATITUDE_VALUE = -90;
     private final double MAX_LATITUDE_VALUE = 90;
     private final double MIN_LONGITUDE_VALUE = -180;
     private final double MAX_LONGITUDE_VALUE = 180;
 
-    public AddingLocationService(WeatherRepositoryImpl weatherRepository) {
+    public AddingLocationService(WeatherRepository weatherRepository) {
         this.weatherRepository = weatherRepository;
     }
 

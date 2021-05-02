@@ -2,6 +2,7 @@ package com.sda.weather;
 
 import com.sda.weather.controller.AddingLocationController;
 import com.sda.weather.controller.GettingLocationController;
+import com.sda.weather.repository.WeatherRepository;
 import com.sda.weather.repository.WeatherRepositoryImpl;
 import com.sda.weather.service.AddingLocationService;
 import com.sda.weather.service.GettingLocationService;
@@ -22,7 +23,7 @@ public class WeatherApplication {
                 .buildMetadata()
                 .buildSessionFactory();
 
-        WeatherRepositoryImpl weatherRepository = new WeatherRepositoryImpl(sessionFactory);
+        WeatherRepository weatherRepository = new WeatherRepositoryImpl(sessionFactory);
         AddingLocationService addingLocationService = new AddingLocationService(weatherRepository);
         AddingLocationController addingLocationController = new AddingLocationController(addingLocationService);
         GettingLocationService gettingLocationService = new GettingLocationService(weatherRepository);

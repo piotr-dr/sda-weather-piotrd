@@ -18,9 +18,6 @@ public class GettingLocationController {
 
     public String getLocations() throws JsonProcessingException {
         List<LocationDTO> locationDTOList = getLocationDTOList();
-        if(locationDTOList.isEmpty()) {
-            throw new RuntimeException("Getting location's list is empty.");
-        }
         ObjectMapper objectMapper = WeatherObjectMapper.getObjectMapper();
         String locationsJSON = objectMapper.writeValueAsString(locationDTOList);
         return locationsJSON;
