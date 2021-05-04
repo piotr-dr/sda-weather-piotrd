@@ -18,8 +18,7 @@ public class GettingLocationController {
 
     public String getLocations() throws JsonProcessingException {
         List<LocationDTO> locationDTOList = getLocationDTOList();
-        ObjectMapper objectMapper = WeatherObjectMapper.getObjectMapper();
-        String locationsJSON = objectMapper.writeValueAsString(locationDTOList);
+        String locationsJSON = WeatherObjectMapper.getObjectMapper().writeValueAsString(locationDTOList);
         return locationsJSON;
     }
 

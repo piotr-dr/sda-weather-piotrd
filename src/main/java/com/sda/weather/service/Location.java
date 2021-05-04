@@ -16,11 +16,11 @@ public class Location {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String countryName;
-    private String regionName;
-    private String cityName;
-    private double latitude;
-    private double longitude;
+    Long id;
+    String countryName;
+    String regionName;
+    String cityName;
+    double latitude;
+    double longitude;
 
 }
