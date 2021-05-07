@@ -1,10 +1,10 @@
 package service;
 
 import com.sda.weather.service.AddingLocationService;
-import com.sda.weather.service.Location;
+import com.sda.weather.service.entities.Location;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import repository.WeatherRepositoryMock;
+import repository.LocationDAOMock;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -15,7 +15,7 @@ public class AddingLocationServiceTest {
 
     @BeforeEach
     void setUp() {
-        WeatherRepositoryMock weatherRepositoryMock = new WeatherRepositoryMock();
+        LocationDAOMock weatherRepositoryMock = new LocationDAOMock();
         addingLocationService = new AddingLocationService(weatherRepositoryMock);
     }
 

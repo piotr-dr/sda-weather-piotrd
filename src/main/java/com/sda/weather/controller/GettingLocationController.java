@@ -1,9 +1,8 @@
 package com.sda.weather.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sda.weather.service.GettingLocationService;
-import com.sda.weather.service.Location;
+import com.sda.weather.service.entities.Location;
 
 import java.util.ArrayList;
 import java.util.List;

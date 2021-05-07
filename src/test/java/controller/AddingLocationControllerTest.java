@@ -2,10 +2,9 @@ package controller;
 
 import com.sda.weather.controller.AddingLocationController;
 import com.sda.weather.service.AddingLocationService;
-import com.sda.weather.service.Location;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import repository.WeatherRepositoryMock;
+import repository.LocationDAOMock;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -16,7 +15,7 @@ public class AddingLocationControllerTest {
 
     @BeforeEach
     void setUp() {
-        WeatherRepositoryMock weatherRepositoryMock = new WeatherRepositoryMock();
+        LocationDAOMock weatherRepositoryMock = new LocationDAOMock();
         AddingLocationService addingLocationService = new AddingLocationService(weatherRepositoryMock);
         addingLocationController = new AddingLocationController(addingLocationService);
     }

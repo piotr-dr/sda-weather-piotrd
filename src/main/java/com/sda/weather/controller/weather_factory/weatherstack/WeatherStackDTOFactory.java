@@ -13,6 +13,8 @@ import java.time.LocalDate;
 
 public class WeatherStackDTOFactory implements WeatherDTOFactory {
 
+    private String ak = "c1462298d58e03161410776ad52a3abc";
+
     @Override
     public WeatherDTO downloadWeather(String cityName, String countryName, LocalDate date) {
         WeatherStackDTO weatherStackDTO;
@@ -20,7 +22,7 @@ public class WeatherStackDTOFactory implements WeatherDTOFactory {
             HttpRequest httpRequest = HttpRequest.newBuilder()
                     .GET()
                     .uri(URI.create("http://api.weatherstack.com/current" +
-                            "?access_key=c1462298d58e03161410776ad52a3abc" +
+                            "?access_key=" + ak +
                             "&query=" + cityName + "," + countryName))
                     .build();
 

@@ -4,10 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sda.weather.controller.GettingLocationController;
 import com.sda.weather.service.AddingLocationService;
 import com.sda.weather.service.GettingLocationService;
-import com.sda.weather.service.Location;
+import com.sda.weather.service.entities.Location;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import repository.WeatherRepositoryMock;
+import repository.LocationDAOMock;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -19,7 +19,7 @@ public class GettingLocationControllerTest {
 
     @BeforeEach
     void setUp() {
-        WeatherRepositoryMock weatherRepositoryMock = new WeatherRepositoryMock();
+        LocationDAOMock weatherRepositoryMock = new LocationDAOMock();
         addingLocationService = new AddingLocationService(weatherRepositoryMock);
         GettingLocationService gettingLocationService = new GettingLocationService(weatherRepositoryMock);
         gettingLocationController = new GettingLocationController(gettingLocationService);

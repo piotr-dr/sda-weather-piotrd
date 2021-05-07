@@ -14,6 +14,8 @@ import java.time.LocalDate;
 
 public class WeatherBitDTOFactory implements WeatherDTOFactory {
 
+    private String ak = "9ea1728d72c6415398e9b57737d2f458";
+
     @Override
     public WeatherDTO downloadWeather(String cityName, String countryName, LocalDate date) {
 
@@ -22,7 +24,7 @@ public class WeatherBitDTOFactory implements WeatherDTOFactory {
 
             HttpRequest httpRequest = HttpRequest.newBuilder()
                     .GET()
-                    .uri(URI.create("https://api.weatherbit.io/v2.0/current?key=9ea1728d72c6415398e9b57737d2f458" +
+                    .uri(URI.create("https://api.weatherbit.io/v2.0/current?key=" + ak +
                             "&city=" + cityName))
                     .build();
 
@@ -30,7 +32,6 @@ public class WeatherBitDTOFactory implements WeatherDTOFactory {
             HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
 
             String bodyResponse = httpResponse.body();
-            System.out.println(bodyResponse);
 
             weatherbitDTO = WeatherObjectMapper.getObjectMapper().readValue(bodyResponse, WeatherbitDTO.class);
         } catch (Exception e) {

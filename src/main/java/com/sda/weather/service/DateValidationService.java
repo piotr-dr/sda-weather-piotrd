@@ -2,7 +2,7 @@ package com.sda.weather.service;
 
 import java.time.LocalDate;
 
-public class DateValidatorService {
+public class DateValidationService {
 
     public static LocalDate validate(String clientDate) {
         if (clientDate.isEmpty()) {

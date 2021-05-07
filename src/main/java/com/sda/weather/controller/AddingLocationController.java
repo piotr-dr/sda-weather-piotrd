@@ -1,7 +1,7 @@
 package com.sda.weather.controller;
 
 import com.sda.weather.service.AddingLocationService;
-import com.sda.weather.service.Location;
+import com.sda.weather.service.entities.Location;
 
 public class AddingLocationController {
 

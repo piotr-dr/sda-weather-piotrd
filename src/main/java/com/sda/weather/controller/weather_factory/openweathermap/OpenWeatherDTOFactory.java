@@ -14,6 +14,8 @@ import java.time.LocalDate;
 
 public class OpenWeatherDTOFactory implements WeatherDTOFactory {
 
+    private String ak = "abc8c6e2e5d31d8874b98f270036015a";
+
     @Override
     public WeatherDTO downloadWeather(String cityName, String countryName, LocalDate date) {
 
@@ -23,7 +25,7 @@ public class OpenWeatherDTOFactory implements WeatherDTOFactory {
             HttpRequest httpRequest = HttpRequest.newBuilder()
                     .GET()
                     .uri(URI.create("http://api.openweathermap.org/data/2.5/weather?q=" + cityName +
-                            "&appid=abc8c6e2e5d31d8874b98f270036015a&units=metric"))
+                            "&appid=" + ak + "&units=metric"))
                     .build();
 
             HttpClient httpClient = HttpClient.newHttpClient();
