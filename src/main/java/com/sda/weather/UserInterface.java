@@ -9,9 +9,8 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 public class UserInterface {
-
     AddingLocationController addingLocationController;
-    GettingLocationController gettingLocationController;
+    GettingLocationController gettingLocationController;    // todo use one LocationController
     WeatherInfoController weatherInfoController;
 
     public UserInterface(AddingLocationController addingLocationController,
@@ -73,7 +72,7 @@ public class UserInterface {
         LocalDate validatedDate = LocalDate.now();
         String weatherInfo = null;
         try {
-            weatherInfo = weatherInfoController.getWeatherInfo(cityName, countryName, validatedDate);
+            weatherInfo = weatherInfoController.getWeatherInfo(cityName, countryName, validatedDate); // todo pass only ID and DATE
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

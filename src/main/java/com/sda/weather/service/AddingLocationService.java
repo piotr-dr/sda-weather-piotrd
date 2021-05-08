@@ -3,10 +3,10 @@ package com.sda.weather.service;
 import com.sda.weather.repository.LocationDAO;
 import com.sda.weather.service.entities.Location;
 
-public class AddingLocationService {
+public class AddingLocationService { // todo rename to LocationCreatorService
 
     private LocationDAO locationDAO;
-    private final double MIN_LATITUDE_VALUE = -90;
+    private final double MIN_LATITUDE_VALUE = -90;  // todo static
     private final double MAX_LATITUDE_VALUE = 90;
     private final double MIN_LONGITUDE_VALUE = -180;
     private final double MAX_LONGITUDE_VALUE = 180;
@@ -16,18 +16,20 @@ public class AddingLocationService {
     }
 
     public Location createNewLocation(String country, String region, String city, double latitude, double longitude) {
-        if(country.isEmpty() || country.isBlank()) {
+        if (country.isEmpty() || country.isBlank()) { // todo check - if value is null then throw an exception
             throw new RuntimeException("Country's name can't be null.");
         }
-        if(city.isEmpty() || city.isBlank()) {
+        if (city.isEmpty() || city.isBlank()) { // todo isBlank covers isEmpty
             throw new RuntimeException("City's name can't be null");
         }
-        if(latitude<MIN_LATITUDE_VALUE || latitude>MAX_LATITUDE_VALUE) {
+        if (latitude < MIN_LATITUDE_VALUE || latitude > MAX_LATITUDE_VALUE) {
             throw new RuntimeException("Latitude's out of range.");
         }
-        if(longitude<MIN_LONGITUDE_VALUE || longitude>MAX_LONGITUDE_VALUE) {
+        if (longitude < MIN_LONGITUDE_VALUE || longitude > MAX_LONGITUDE_VALUE) {
             throw new RuntimeException("Longitude's out of range.");
         }
+
+        // todo valid a region value
 
         Location location = new Location(country, region, city, latitude, longitude);
         Location savedLocation = locationDAO.saveLocation(location);

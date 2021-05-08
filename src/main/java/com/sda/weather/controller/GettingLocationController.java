@@ -7,7 +7,7 @@ import com.sda.weather.service.entities.Location;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GettingLocationController {
+public class GettingLocationController { // todo move to LocationController
 
     private GettingLocationService gettingLocationService;
 
@@ -24,7 +24,7 @@ public class GettingLocationController {
     private List<LocationDTO> getLocationDTOList() {
         List<Location> locations = gettingLocationService.getLocations();
         List<LocationDTO> locationDTOList = new ArrayList<>();
-        for (Location location : locations) {
+        for (Location location : locations) { // todo move it to LocationMapper
             locationDTOList.add(new LocationDTO()
                     .setId(location.getId())
                     .setCountryName(location.getCountryName())

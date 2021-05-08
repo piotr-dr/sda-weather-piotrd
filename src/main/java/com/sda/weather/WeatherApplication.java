@@ -23,7 +23,6 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 public class WeatherApplication {
 
     public static void main(String[] args) {
-
         StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure()
                 .build();
@@ -48,5 +47,4 @@ public class WeatherApplication {
 
         userInterface.runApplication();
     }
-
 }

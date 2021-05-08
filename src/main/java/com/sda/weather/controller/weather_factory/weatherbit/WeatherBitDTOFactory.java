@@ -14,7 +14,7 @@ import java.time.LocalDate;
 
 public class WeatherBitDTOFactory implements WeatherDTOFactory {
 
-    private String ak = "9ea1728d72c6415398e9b57737d2f458";
+    private String ak = "9ea1728d72c6415398e9b57737d2f458"; // todo ak -> AK
 
     @Override
     public WeatherDTO downloadWeather(String cityName, String countryName, LocalDate date) {
