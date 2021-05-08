@@ -16,10 +16,10 @@ public class AddingLocationService {
     }
 
     public Location createNewLocation(String country, String region, String city, double latitude, double longitude) {
-        if(country.isEmpty()) {
+        if(country.isEmpty() || country.isBlank()) {
             throw new RuntimeException("Country's name can't be null.");
         }
-        if(city.isEmpty()) {
+        if(city.isEmpty() || city.isBlank()) {
             throw new RuntimeException("City's name can't be null");
         }
         if(latitude<MIN_LATITUDE_VALUE || latitude>MAX_LATITUDE_VALUE) {
