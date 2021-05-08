@@ -104,7 +104,12 @@ public class UserInterface {
         System.out.println("Type longitude:");
         double longitude = scanner.nextDouble();
         scanner.nextLine();
-        String response = addingLocationController.addNewLocation(country, region, city, latitude, longitude);
+        String response = null;
+        try {
+            response = addingLocationController.addNewLocation(country, region, city, latitude, longitude);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
         System.out.printf("\nNew location has been added:\n%s\n", response);
     }
 

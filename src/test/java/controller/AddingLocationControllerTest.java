@@ -1,5 +1,6 @@
 package controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sda.weather.controller.AddingLocationController;
 import com.sda.weather.service.AddingLocationService;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +22,7 @@ public class AddingLocationControllerTest {
     }
 
     @Test
-    void whenAddsNewLocation_givenProperParameters_thenAddsNewLocation() {
+    void whenAddsNewLocation_givenProperParameters_thenAddsNewLocation() throws JsonProcessingException {
         //when
         String s = addingLocationController.addNewLocation("Poland", "Europe", "Gdansk", 32.3232, 43.4234);
 

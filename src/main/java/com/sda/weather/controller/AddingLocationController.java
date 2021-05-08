@@ -1,5 +1,6 @@
 package com.sda.weather.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sda.weather.service.AddingLocationService;
 import com.sda.weather.service.entities.Location;
 
@@ -11,12 +12,18 @@ public class AddingLocationController {
         this.addingLocationService = addingLocationService;
     }
 
-    public String addNewLocation(String country, String region, String city, double latitude, double longitude) {
+    public String addNewLocation(String country, String region, String city, double latitude, double longitude) throws JsonProcessingException {
         Location newLocation = addingLocationService.createNewLocation(country, region, city, latitude, longitude);
-        return String.format("[{\"id\":%s,\"countryName\":\"%s\",\"regionName\":\"%s\"," +
-                        "\"cityName\":\"%s\",\"latitude\":%s,\"longitude\":%s]}",
-                newLocation.getId(), newLocation.getCountryName(), newLocation.getRegionName(),
-                newLocation.getCityName(), newLocation.getLatitude(), newLocation.getLongitude());
+        LocationDTO locationDTO = new LocationDTO()
+                .setId(newLocation.getId())
+                .setCountryName(newLocation.getCountryName())
+                .setCityName(newLocation.getCityName())
+                .setRegionName(newLocation.getRegionName())
+                .setLatitude(newLocation.getLatitude())
+                .setLongitude(newLocation.getLongitude())
+                .build();
+        String response = WeatherObjectMapper.getObjectMapper().writeValueAsString(locationDTO);
+        return response;
     }
 
 }
