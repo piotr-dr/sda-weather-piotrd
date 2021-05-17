@@ -8,6 +8,7 @@ import org.hibernate.Transaction;
 import javax.persistence.NoResultException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
+import java.util.Optional;
 
 public class LocationDAOImpl implements LocationDAO {
 
@@ -44,24 +45,15 @@ public class LocationDAOImpl implements LocationDAO {
     }
 
     @Override
-    public Location getLocation(String cityName, String countryName) {
+    public Optional<Location> getLocation(Long locationId) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        Location addedLocation;
 
-        try {
-            addedLocation = session.createQuery("SELECT l FROM Location AS l WHERE l.cityName = :cityName " +
-                    "AND l.countryName = :countryName", Location.class)
-                    .setParameter("cityName", cityName)
-                    .setParameter("countryName", countryName)
-                    .getSingleResult();
-        } catch (NoResultException e) {
-            throw new NoResultException("This location doesn't exist in database.");
-        }
+        Optional<Location> location = session.byId(Location.class).loadOptional(locationId);
 
         transaction.commit();
         session.close();
-        return addedLocation;
+        return location;
     }
 
 

@@ -1,11 +1,10 @@
-package com.sda.weather.controller.weather_factory.weatherbit;
+package com.sda.weather.service.currentweatherfactory.weatherbit;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sda.weather.controller.WeatherObjectMapper;
-import com.sda.weather.controller.weather_factory.WeatherDTO;
-import com.sda.weather.controller.weather_factory.WeatherDTOFactory;
+import com.sda.weather.service.currentweatherfactory.WeatherDTO;
+import com.sda.weather.service.currentweatherfactory.WeatherDTOFactory;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -14,7 +13,13 @@ import java.time.LocalDate;
 
 public class WeatherBitDTOFactory implements WeatherDTOFactory {
 
-    private String ak = "9ea1728d72c6415398e9b57737d2f458"; // todo ak -> AK
+    private String AK;
+    private ObjectMapper objectMapper;
+
+    public WeatherBitDTOFactory() {
+        this.AK = "9ea1728d72c6415398e9b57737d2f458";
+        this.objectMapper = WeatherObjectMapper.getObjectMapper();
+    }
 
     @Override
     public WeatherDTO downloadWeather(String cityName, String countryName, LocalDate date) {
@@ -24,7 +29,7 @@ public class WeatherBitDTOFactory implements WeatherDTOFactory {
 
             HttpRequest httpRequest = HttpRequest.newBuilder()
                     .GET()
-                    .uri(URI.create("https://api.weatherbit.io/v2.0/current?key=" + ak +
+                    .uri(URI.create("https://api.weatherbit.io/v2.0/current?key=" + AK +
                             "&city=" + cityName))
                     .build();
 
@@ -33,7 +38,7 @@ public class WeatherBitDTOFactory implements WeatherDTOFactory {
 
             String bodyResponse = httpResponse.body();
 
-            weatherbitDTO = WeatherObjectMapper.getObjectMapper().readValue(bodyResponse, WeatherbitDTO.class);
+            weatherbitDTO = objectMapper.readValue(bodyResponse, WeatherbitDTO.class);
         } catch (Exception e) {
             throw new RuntimeException("Internal server error");
         }

@@ -1,23 +1,20 @@
 package com.sda.weather;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.sda.weather.controller.AddingLocationController;
-import com.sda.weather.controller.GettingLocationController;
+import com.sda.weather.controller.LocationController;
 import com.sda.weather.controller.WeatherInfoController;
+import com.sda.weather.service.DateValidationService;
 
 import java.time.LocalDate;
 import java.util.Scanner;
 
 public class UserInterface {
-    AddingLocationController addingLocationController;
-    GettingLocationController gettingLocationController;    // todo use one LocationController
+    LocationController locationController;
     WeatherInfoController weatherInfoController;
 
-    public UserInterface(AddingLocationController addingLocationController,
-                         GettingLocationController gettingLocationController,
+    public UserInterface(LocationController locationController,
                          WeatherInfoController weatherInfoController) {
-        this.addingLocationController = addingLocationController;
-        this.gettingLocationController = gettingLocationController;
+        this.locationController = locationController;
         this.weatherInfoController = weatherInfoController;
     }
 
@@ -53,39 +50,20 @@ public class UserInterface {
     }
 
     private void getWeatherInfo() {
-        System.out.println("\nINFO:\n" + "You can get weather data up to 14 days in advance.");
+        System.out.println("\nINFO:\n" + "You can get weather data up to 7 days in advance.");
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the city name:");
-        String cityName = scanner.nextLine();
-        if (cityName.isEmpty()) {
-            throw new RuntimeException("City's name can't be empty.");
-        }
-        System.out.println("Enter the country name:");
-        String countryName = scanner.nextLine();
-        if (countryName.isEmpty()) {
-            throw new RuntimeException("Country's name can't be empty.");
-        }
+        System.out.println("Enter the location's id:");
+        long locationId = scanner.nextLong();
+        scanner.nextLine();
         System.out.println("Enter the date: [yyyy-mm-dd]");
         String date = scanner.nextLine();
-        //FUTURE FEATURE:
-        //LocalDate validatedDate = DateValidatorService.validate(date);
-        LocalDate validatedDate = LocalDate.now();
-        String weatherInfo = null;
-        try {
-            weatherInfo = weatherInfoController.getWeatherInfo(cityName, countryName, validatedDate); // todo pass only ID and DATE
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        System.out.printf("\nWeather forecast for %s, %s (%s):\n%s\n", cityName, countryName, date, weatherInfo);
+        LocalDate validatedDate = DateValidationService.validate(date);
+        String weatherInfo = weatherInfoController.getWeatherInfo(locationId, validatedDate);
+        System.out.printf("\nWeather forecast for %s:\n%s\n", date, weatherInfo);
     }
 
     private void showLocations() {
-        String locations = null;
-        try {
-            locations = gettingLocationController.getLocations();
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+        String locations = locationController.getLocations();
         System.out.printf("\nAdded locations:\n%s\n", locations);
     }
 
@@ -103,12 +81,7 @@ public class UserInterface {
         System.out.println("Type longitude:");
         double longitude = scanner.nextDouble();
         scanner.nextLine();
-        String response = null;
-        try {
-            response = addingLocationController.addNewLocation(country, region, city, latitude, longitude);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+        String response = locationController.addNewLocation(country, region, city, latitude, longitude);
         System.out.printf("\nNew location has been added:\n%s\n", response);
     }
 

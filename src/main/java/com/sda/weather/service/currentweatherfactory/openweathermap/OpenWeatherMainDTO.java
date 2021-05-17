@@ -1,4 +1,4 @@
-package com.sda.weather.controller.weather_factory.openweathermap;
+package com.sda.weather.service.currentweatherfactory.openweathermap;
 
 import lombok.Getter;
 import lombok.ToString;

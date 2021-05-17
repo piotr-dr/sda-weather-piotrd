@@ -1,20 +1,21 @@
 package com.sda.weather;
 
-import com.sda.weather.controller.AddingLocationController;
-import com.sda.weather.controller.GettingLocationController;
+import com.sda.weather.controller.LocationController;
+import com.sda.weather.controller.LocationMapper;
 import com.sda.weather.controller.WeatherInfoController;
-import com.sda.weather.controller.weather_factory.WeatherDTOFactory;
-import com.sda.weather.controller.weather_factory.openweathermap.OpenWeatherDTOFactory;
-import com.sda.weather.controller.weather_factory.weatherbit.WeatherBitDTOFactory;
-import com.sda.weather.controller.weather_factory.weatherstack.WeatherStackDTOFactory;
+import com.sda.weather.controller.WeatherInfoMapper;
+import com.sda.weather.service.currentweatherfactory.WeatherDTOFactory;
+import com.sda.weather.service.currentweatherfactory.openweathermap.OpenWeatherDTOFactory;
+import com.sda.weather.service.currentweatherfactory.weatherbit.WeatherBitDTOFactory;
+import com.sda.weather.service.currentweatherfactory.weatherstack.WeatherStackDTOFactory;
 import com.sda.weather.repository.LocationDAO;
 import com.sda.weather.repository.LocationDAOImpl;
 import com.sda.weather.repository.WeatherInfoDAO;
 import com.sda.weather.repository.WeatherInfoDAOImpl;
-import com.sda.weather.service.AddingLocationService;
-import com.sda.weather.service.GettingLocationService;
-import com.sda.weather.service.LocationValidationService;
+import com.sda.weather.service.LocationCreatorService;
+import com.sda.weather.service.LocationProviderService;
 import com.sda.weather.service.WeatherInfoService;
+import com.sda.weather.service.weatherforecastfactory.WeatherForecastDTOFactory;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
@@ -33,17 +34,21 @@ public class WeatherApplication {
 
         LocationDAO locationDAO = new LocationDAOImpl(sessionFactory);
         WeatherInfoDAO weatherInfoDAO = new WeatherInfoDAOImpl(sessionFactory);
-        AddingLocationService addingLocationService = new AddingLocationService(locationDAO);
-        AddingLocationController addingLocationController = new AddingLocationController(addingLocationService);
-        GettingLocationService gettingLocationService = new GettingLocationService(locationDAO);
-        GettingLocationController gettingLocationController = new GettingLocationController(gettingLocationService);
-        WeatherDTOFactory[] weatherDTOFactories = {new OpenWeatherDTOFactory(), new WeatherBitDTOFactory(), new WeatherStackDTOFactory()};
-        LocationValidationService locationValidationService = new LocationValidationService(locationDAO);
-        WeatherInfoService weatherInfoService = new WeatherInfoService(weatherDTOFactories, weatherInfoDAO, locationValidationService);
-        WeatherInfoController weatherInfoController = new WeatherInfoController(weatherInfoService);
+        LocationCreatorService locationCreatorService = new LocationCreatorService(locationDAO);
+        LocationMapper locationMapper = new LocationMapper();
+        LocationProviderService locationProviderService = new LocationProviderService(locationDAO);
+        LocationController locationController = new LocationController(locationCreatorService, locationProviderService,
+                locationMapper);
+        WeatherDTOFactory[] weatherDTOFactories = {new OpenWeatherDTOFactory(), new WeatherBitDTOFactory(),
+                new WeatherStackDTOFactory()};
+        WeatherForecastDTOFactory weatherForecastDTOFactory = new WeatherForecastDTOFactory();
+        WeatherInfoService weatherInfoService = new WeatherInfoService(weatherDTOFactories, weatherForecastDTOFactory,
+                weatherInfoDAO, locationProviderService);
+        WeatherInfoMapper weatherInfoMapper = new WeatherInfoMapper();
+        WeatherInfoController weatherInfoController = new WeatherInfoController(weatherInfoService, weatherInfoMapper);
 
 
-        UserInterface userInterface = new UserInterface(addingLocationController, gettingLocationController, weatherInfoController);
+        UserInterface userInterface = new UserInterface(locationController, weatherInfoController);
 
         userInterface.runApplication();
     }

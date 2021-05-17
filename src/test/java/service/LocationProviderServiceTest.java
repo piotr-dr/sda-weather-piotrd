@@ -1,7 +1,7 @@
 package service;
 
-import com.sda.weather.service.AddingLocationService;
-import com.sda.weather.service.GettingLocationService;
+import com.sda.weather.service.LocationCreatorService;
+import com.sda.weather.service.LocationProviderService;
 import com.sda.weather.service.entities.Location;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,24 +12,24 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 
 import java.util.List;
 
-public class GettingLocationServiceTest {
+public class LocationProviderServiceTest {
 
-    GettingLocationService gettingLocationService;
-    AddingLocationService addingLocationService;
+    LocationProviderService locationProviderService;
+    LocationCreatorService locationCreatorService;
 
     @BeforeEach
     void setUp() {
         LocationDAOMock weatherRepositoryMock = new LocationDAOMock();
-        gettingLocationService = new GettingLocationService(weatherRepositoryMock);
-        addingLocationService = new AddingLocationService(weatherRepositoryMock);
+        locationProviderService = new LocationProviderService(weatherRepositoryMock);
+        locationCreatorService = new LocationCreatorService(weatherRepositoryMock);
     }
 
     @Test
     void whenGetsLocationsFromNotEmptyDatabase_thenGetsAllLocations() {
         //when
-        Location newLocation = addingLocationService.createNewLocation("X", "X", "X", 32.32, 32.32);
-        Location newLocation1 = addingLocationService.createNewLocation("X", "X", "X", 32.32, 32.32);
-        List<Location> locations = gettingLocationService.getLocations();
+        Location newLocation = locationCreatorService.createNewLocation("X", "X", "X", 32.32, 32.32);
+        Location newLocation1 = locationCreatorService.createNewLocation("X", "X", "X", 32.32, 32.32);
+        List<Location> locations = locationProviderService.getLocations();
 
         //then
         assertThat(locations).isNotEmpty();
@@ -39,7 +39,7 @@ public class GettingLocationServiceTest {
     @Test
     void whenGetsLocationsFromEmptyDatabase_thenThrowsAnException() {
         //when
-        Throwable throwable = catchThrowable(() -> gettingLocationService.getLocations());
+        Throwable throwable = catchThrowable(() -> locationProviderService.getLocations());
 
         //then
         assertThat(throwable).isExactlyInstanceOf(RuntimeException.class);

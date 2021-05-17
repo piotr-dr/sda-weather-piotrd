@@ -1,4 +1,4 @@
-package com.sda.weather.controller.weather_factory.weatherbit;
+package com.sda.weather.service.currentweatherfactory.weatherbit;
 
 import lombok.Getter;
 import lombok.ToString;

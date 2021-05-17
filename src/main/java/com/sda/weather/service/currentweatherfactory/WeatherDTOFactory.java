@@ -1,4 +1,4 @@
-package com.sda.weather.controller.weather_factory;
+package com.sda.weather.service.currentweatherfactory;
 
 import java.time.LocalDate;
 

@@ -3,23 +3,23 @@ package com.sda.weather.service;
 import com.sda.weather.repository.LocationDAO;
 import com.sda.weather.service.entities.Location;
 
-public class AddingLocationService { // todo rename to LocationCreatorService
+public class LocationCreatorService {
 
     private LocationDAO locationDAO;
-    private final double MIN_LATITUDE_VALUE = -90;  // todo static
-    private final double MAX_LATITUDE_VALUE = 90;
-    private final double MIN_LONGITUDE_VALUE = -180;
-    private final double MAX_LONGITUDE_VALUE = 180;
+    private static final double MIN_LATITUDE_VALUE = -90;
+    private static final double MAX_LATITUDE_VALUE = 90;
+    private static final double MIN_LONGITUDE_VALUE = -180;
+    private static final double MAX_LONGITUDE_VALUE = 180;
 
-    public AddingLocationService(LocationDAO locationDAO) {
+    public LocationCreatorService(LocationDAO locationDAO) {
         this.locationDAO = locationDAO;
     }
 
     public Location createNewLocation(String country, String region, String city, double latitude, double longitude) {
-        if (country.isEmpty() || country.isBlank()) { // todo check - if value is null then throw an exception
+        if (country.isBlank() || country == null) {
             throw new RuntimeException("Country's name can't be null.");
         }
-        if (city.isEmpty() || city.isBlank()) { // todo isBlank covers isEmpty
+        if (city.isBlank() || city == null) {
             throw new RuntimeException("City's name can't be null");
         }
         if (latitude < MIN_LATITUDE_VALUE || latitude > MAX_LATITUDE_VALUE) {
@@ -28,12 +28,12 @@ public class AddingLocationService { // todo rename to LocationCreatorService
         if (longitude < MIN_LONGITUDE_VALUE || longitude > MAX_LONGITUDE_VALUE) {
             throw new RuntimeException("Longitude's out of range.");
         }
-
-        // todo valid a region value
+        if (region.isBlank()) {
+            region = null;
+        }
 
         Location location = new Location(country, region, city, latitude, longitude);
-        Location savedLocation = locationDAO.saveLocation(location);
-        return savedLocation;
+        return locationDAO.saveLocation(location);
     }
 
 }

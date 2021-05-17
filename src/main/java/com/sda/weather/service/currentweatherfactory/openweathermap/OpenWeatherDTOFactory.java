@@ -1,11 +1,10 @@
-package com.sda.weather.controller.weather_factory.openweathermap;
+package com.sda.weather.service.currentweatherfactory.openweathermap;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sda.weather.controller.WeatherObjectMapper;
-import com.sda.weather.controller.weather_factory.WeatherDTO;
-import com.sda.weather.controller.weather_factory.WeatherDTOFactory;
+import com.sda.weather.service.currentweatherfactory.WeatherDTO;
+import com.sda.weather.service.currentweatherfactory.WeatherDTOFactory;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -14,7 +13,13 @@ import java.time.LocalDate;
 
 public class OpenWeatherDTOFactory implements WeatherDTOFactory {
 
-    private String ak = "abc8c6e2e5d31d8874b98f270036015a";
+    private String AK;
+    private ObjectMapper objectMapper;
+
+    public OpenWeatherDTOFactory() {
+        this.AK = "abc8c6e2e5d31d8874b98f270036015a";
+        this.objectMapper = WeatherObjectMapper.getObjectMapper();
+    }
 
     @Override
     public WeatherDTO downloadWeather(String cityName, String countryName, LocalDate date) {
@@ -25,14 +30,14 @@ public class OpenWeatherDTOFactory implements WeatherDTOFactory {
             HttpRequest httpRequest = HttpRequest.newBuilder()
                     .GET()
                     .uri(URI.create("http://api.openweathermap.org/data/2.5/weather?q=" + cityName +
-                            "&appid=" + ak + "&units=metric"))
+                            "&appid=" + AK + "&units=metric"))
                     .build();
 
             HttpClient httpClient = HttpClient.newHttpClient();
             HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
             String bodyResponse = httpResponse.body();
 
-            openWeatherDTO = WeatherObjectMapper.getObjectMapper().readValue(bodyResponse, OpenWeatherDTO.class);
+            openWeatherDTO = objectMapper.readValue(bodyResponse, OpenWeatherDTO.class);
 
         } catch (Exception e) {
             throw new RuntimeException("Internal server error");

@@ -3,6 +3,7 @@ package com.sda.weather.repository;
 import com.sda.weather.service.entities.Location;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface LocationDAO {
 
@@ -10,5 +11,5 @@ public interface LocationDAO {
 
     List<Location> getLocations();
 
-    Location getLocation(String cityName, String countryName);
+    Optional<Location> getLocation(Long locationId);
 }

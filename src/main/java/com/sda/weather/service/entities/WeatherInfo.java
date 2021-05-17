@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 @Entity
 @NoArgsConstructor
@@ -18,6 +19,7 @@ public class WeatherInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+    Date date;
     @Column(precision = 2, scale = 1)
     @Type(type = "double")
     Double temperature;

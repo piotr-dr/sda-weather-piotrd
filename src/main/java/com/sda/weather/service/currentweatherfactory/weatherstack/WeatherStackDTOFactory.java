@@ -1,10 +1,10 @@
-package com.sda.weather.controller.weather_factory.weatherstack;
+package com.sda.weather.service.currentweatherfactory.weatherstack;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sda.weather.controller.WeatherObjectMapper;
-import com.sda.weather.controller.weather_factory.WeatherDTO;
-import com.sda.weather.controller.weather_factory.WeatherDTOFactory;
+import com.sda.weather.service.currentweatherfactory.WeatherDTO;
+import com.sda.weather.service.currentweatherfactory.WeatherDTOFactory;
 
-import java.io.DataInput;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -13,7 +13,13 @@ import java.time.LocalDate;
 
 public class WeatherStackDTOFactory implements WeatherDTOFactory {
 
-    private String ak = "c1462298d58e03161410776ad52a3abc";
+    private String AK;
+    private ObjectMapper objectMapper;
+
+    public WeatherStackDTOFactory() {
+        this.AK = "c1462298d58e03161410776ad52a3abc";
+        this.objectMapper = WeatherObjectMapper.getObjectMapper();
+    }
 
     @Override
     public WeatherDTO downloadWeather(String cityName, String countryName, LocalDate date) {
@@ -22,7 +28,7 @@ public class WeatherStackDTOFactory implements WeatherDTOFactory {
             HttpRequest httpRequest = HttpRequest.newBuilder()
                     .GET()
                     .uri(URI.create("http://api.weatherstack.com/current" +
-                            "?access_key=" + ak +
+                            "?access_key=" + AK +
                             "&query=" + cityName + "," + countryName))
                     .build();
 
@@ -30,7 +36,7 @@ public class WeatherStackDTOFactory implements WeatherDTOFactory {
             HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
             String response = httpResponse.body();
 
-            weatherStackDTO = WeatherObjectMapper.getObjectMapper().readValue(response, WeatherStackDTO.class);
+            weatherStackDTO = objectMapper.readValue(response, WeatherStackDTO.class);
 
         } catch (Exception e) {
             throw new RuntimeException("Internal server error");

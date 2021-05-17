@@ -1,6 +1,5 @@
-package com.sda.weather.controller.weather_factory.weatherstack;
+package com.sda.weather.service.currentweatherfactory.weatherstack;
 
-import com.sda.weather.controller.weather_factory.WeatherDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;

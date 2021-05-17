@@ -5,6 +5,7 @@ import com.sda.weather.service.entities.Location;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class LocationDAOMock implements LocationDAO {
 
@@ -24,7 +25,7 @@ public class LocationDAOMock implements LocationDAO {
     }
 
     @Override
-    public Location getLocation(String cityName, String countryName) {
-        return null;
+    public Optional<Location> getLocation(Long locationId) {
+        return Optional.ofNullable(dataBaseMock.get(locationId.intValue()));
     }
 }
